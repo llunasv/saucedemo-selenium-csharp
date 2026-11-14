@@ -44,6 +44,13 @@ SauceDemo.Tests/
 
 ## Design patterns
 - **Page Object Model** – one class per screen; tests never touch locators.
+- **Fluent Page Objects** – actions return the page they lead to, so tests read as a
+  user journey and the compiler enforces the flow:
+  `Login()` → `InventoryPage` → `OpenCart()` → `CartPage` → `Checkout()` → ...
+  Failure paths are explicit (`LoginExpectingError()`, `ContinueExpectingError()`).
+- **Page load verification** – every page waits for an element unique to it when created
+  and fails with a clear message (`InventoryPage did not load...`) instead of a vague
+  timeout several steps later.
 - **Factory** – `DriverFactory` creates and configures the browser in one place.
 - **Base classes** – `BaseTest` owns the browser lifecycle, `BasePage` owns waiting
   and element interaction, so every test and page gets them for free.
@@ -87,6 +94,4 @@ GitHub Actions (Ubuntu, Chrome in headless mode). Test results are uploaded as a
 manually from the **Actions** tab.
 
 ## Roadmap
-- [ ] Fluent Page Objects – actions return the next page (`Login()` → `InventoryPage`)
-- [ ] Page load verification – each page confirms it loaded before use
 - [ ] Cross-browser – choose Chrome / Firefox / Edge with a `BROWSER` variable
