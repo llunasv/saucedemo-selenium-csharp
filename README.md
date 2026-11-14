@@ -21,7 +21,8 @@ built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 | Cart     | Adding items updates the cart badge count                    | ✅ Done |
 | Checkout | Missing first name, last name or postal code blocks checkout | ✅ Done |
 | Checkout | Order item total equals the sum of item prices               | ✅ Done |
-| Checkout | Complete purchase end-to-end                                 | ⏳ Planned |
+| Checkout | Complete purchase end-to-end shows the order confirmation    | ✅ Done |
+| Checkout | Cart is empty after a completed order                        | ✅ Done |
 | Sorting  | Products sorted by name (A → Z, Z → A) are in correct order  | ✅ Done |
 | Sorting  | Products sorted by price (low → high, high → low) are in correct order | ✅ Done |
 | Logout   | Logging out returns the user to the login page               | 💡 Optional |
@@ -49,7 +50,9 @@ SauceDemo.Tests/
 - **Page Object Model** – one class per screen; tests never touch locators.
 - **Fluent Page Objects** – actions return the page they lead to, so tests read as a
   user journey and the compiler enforces the flow:
-  `Login()` → `InventoryPage` → `OpenCart()` → `CartPage` → `Checkout()` → ...
+  `Login()` → `InventoryPage` → `OpenCart()` → `CartPage` → `Checkout()` →
+  `CheckoutInformationPage` → `Continue()` → `CheckoutOverviewPage` → `Finish()` →
+  `CheckoutCompletePage`.
   Failure paths are explicit (`LoginExpectingError()`, `ContinueExpectingError()`).
 - **Page load verification** – every page waits for an element unique to it when created
   and fails with a clear message (`InventoryPage did not load...`) instead of a vague
