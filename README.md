@@ -16,8 +16,8 @@ built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 | Login    | Locked-out user sees an error                                | ✅ Done |
 | Login    | Empty fields show validation errors                          | ✅ Done |
 | Cart     | Adding items updates the cart badge count                    | ✅ Done |
-| Checkout | Missing first name, last name or postal code blocks checkout | ⏳ Planned |
-| Checkout | Order item total equals the sum of item prices               | ⏳ Planned |
+| Checkout | Missing first name, last name or postal code blocks checkout | ✅ Done |
+| Checkout | Order item total equals the sum of item prices               | ✅ Done |
 | Checkout | Complete purchase end-to-end                                 | ⏳ Planned |
 | Sorting  | Products sorted by price (low → high) are in correct order   | ⏳ Planned |
 | Logout   | Logging out returns the user to the login page               | 💡 Optional |
@@ -44,7 +44,10 @@ SauceDemo.Tests/
 - **Factory** – `DriverFactory` creates and configures the browser in one place.
 - **Base classes** – `BaseTest` owns the browser lifecycle, `BasePage` owns waiting
   and element interaction, so every test and page gets them for free.
-- **Data-driven tests** – NUnit `[TestCase]` runs one test with multiple input sets.
+- **Builder** – `CustomerBuilder` creates a valid customer by default; each test
+  changes only the field it cares about (`WithoutPostalCode()`).
+- **Data-driven tests** – NUnit `[TestCase]` and `[TestCaseSource]` run one test
+  with multiple input sets.
 
 ## Getting started
 
@@ -78,5 +81,4 @@ dotnet test --filter "FullyQualifiedName~LoginTests"
 - [ ] CI – run tests headless on every pull request with GitHub Actions
 - [ ] Fluent Page Objects – actions return the next page (`Login()` → `InventoryPage`)
 - [ ] Page load verification – each page confirms it loaded before use
-- [ ] Builder pattern – readable checkout test data (`CustomerBuilder`)
 - [ ] Cross-browser – choose Chrome / Firefox / Edge with a `BROWSER` variable

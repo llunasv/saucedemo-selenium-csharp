@@ -33,5 +33,12 @@ public abstract class BasePage
 
     protected string GetText(By locator) => Find(locator).Text;
 
+    protected IReadOnlyList<string> GetTexts(By locator) =>
+        Wait.Until(d =>
+        {
+            var elements = d.FindElements(locator);
+            return elements.Count > 0 ? elements.Select(e => e.Text).ToList() : null;
+        });
+
     protected bool IsPresent(By locator) => Driver.FindElements(locator).Count > 0;
 }
