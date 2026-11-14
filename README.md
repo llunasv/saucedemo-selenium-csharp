@@ -12,9 +12,9 @@ built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 ## Test coverage
 | Area     | Scenario                                   | Status |
 |----------|--------------------------------------------|--------|
-| Login    | Valid credentials log the user in          | ⏳ Planned |
-| Login    | Locked-out user sees an error              | ⏳ Planned |
-| Login    | Empty fields show validation errors        | ⏳ Planned |
+| Login    | Valid credentials log the user in          | ✅ Done |
+| Login    | Locked-out user sees an error              | ✅ Done |
+| Login    | Empty fields show validation errors        | ✅ Done |
 | Cart     | Adding items updates the cart badge count  | ⏳ Planned |
 | Checkout | Missing postal code blocks checkout        | ⏳ Planned |
 
