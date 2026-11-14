@@ -9,7 +9,7 @@ public class LoginPage : BasePage
     private static readonly By LoginButton = By.CssSelector("[data-test='login-button']");
     private static readonly By ErrorMessage = By.CssSelector("[data-test='error']");
 
-    public LoginPage(IWebDriver driver) : base(driver) { }
+    public LoginPage(IWebDriver driver) : base(driver, LoginButton) { }
 
     public void Login(string username, string password)
     {

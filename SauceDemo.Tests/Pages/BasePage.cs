@@ -9,10 +9,25 @@ public abstract class BasePage
     protected readonly IWebDriver Driver;
     protected readonly WebDriverWait Wait;
 
-    protected BasePage(IWebDriver driver)
+    protected BasePage(IWebDriver driver, By pageIdentifier)
     {
         Driver = driver;
-        Wait = new WebDriverWait(driver, TestSettings.DefaultTimeout); //10 secs
+        Wait = new WebDriverWait(driver, TestSettings.DefaultTimeout);
+        VerifyLoaded(pageIdentifier);
+    }
+
+    private void VerifyLoaded(By pageIdentifier)
+    {
+        try
+        {
+            Find(pageIdentifier);
+        }
+        catch (WebDriverTimeoutException e)
+        {
+            throw new WebDriverTimeoutException(
+                $"{GetType().Name} did not load within {TestSettings.DefaultTimeout.TotalSeconds} seconds " +
+                $"(waited for {pageIdentifier})", e);
+        }
     }
 
     protected IWebElement Find(By locator) =>

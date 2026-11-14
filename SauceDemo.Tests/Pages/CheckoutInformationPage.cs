@@ -11,7 +11,7 @@ public class CheckoutInformationPage : BasePage
     private static readonly By ContinueButton = By.CssSelector("[data-test='continue']");
     private static readonly By ErrorMessage = By.CssSelector("[data-test='error']");
 
-    public CheckoutInformationPage(IWebDriver driver) : base(driver) { }
+    public CheckoutInformationPage(IWebDriver driver) : base(driver, FirstNameInput) { }
 
     public void FillInformation(Customer customer)
     {

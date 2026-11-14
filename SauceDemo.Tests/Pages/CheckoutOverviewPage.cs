@@ -8,7 +8,7 @@ public class CheckoutOverviewPage : BasePage
     private static readonly By ItemPrices = By.CssSelector("[data-test='inventory-item-price']");
     private static readonly By ItemTotalLabel = By.CssSelector("[data-test='subtotal-label']");
 
-    public CheckoutOverviewPage(IWebDriver driver) : base(driver) { }
+    public CheckoutOverviewPage(IWebDriver driver) : base(driver, ItemTotalLabel) { }
 
     public IReadOnlyList<decimal> GetItemPrices() =>
         GetTexts(ItemPrices).Select(ParsePrice).ToList();
