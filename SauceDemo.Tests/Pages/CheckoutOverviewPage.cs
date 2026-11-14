@@ -1,4 +1,3 @@
-using System.Globalization;
 using OpenQA.Selenium;
 
 namespace SauceDemo.Tests.Pages;
@@ -14,8 +13,4 @@ public class CheckoutOverviewPage : BasePage
         GetTexts(ItemPrices).Select(ParsePrice).ToList();
 
     public decimal GetItemTotal() => ParsePrice(GetText(ItemTotalLabel).Split('$')[1]);
-
-    // "$29.99" -> 29.99; InvariantCulture so "." is the decimal separator on any PC locale
-    private static decimal ParsePrice(string text) =>
-        decimal.Parse(text.TrimStart('$'), CultureInfo.InvariantCulture);
 }
