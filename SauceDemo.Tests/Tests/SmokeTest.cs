@@ -1,4 +1,6 @@
-﻿namespace SauceDemo.Tests
+﻿using SauceDemo.Tests.Core;
+
+namespace SauceDemo.Tests.Tests
 {
     public class SmokeTest : BaseTest
     {
