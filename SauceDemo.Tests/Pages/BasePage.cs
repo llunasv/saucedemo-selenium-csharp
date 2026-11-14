@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System.Globalization;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SauceDemo.Tests.Core;
 
@@ -13,6 +14,7 @@ public abstract class BasePage
     {
         Driver = driver;
         Wait = new WebDriverWait(driver, TestSettings.DefaultTimeout);
+        Wait.IgnoreExceptionTypes(typeof(StaleElementReferenceException));
         VerifyLoaded(pageIdentifier);
     }
 
@@ -56,4 +58,8 @@ public abstract class BasePage
         });
 
     protected bool IsPresent(By locator) => Driver.FindElements(locator).Count > 0;
+
+    // "$29.99" -> 29.99; InvariantCulture so "." is the decimal separator on any PC locale
+    protected static decimal ParsePrice(string text) =>
+        decimal.Parse(text.TrimStart('$'), CultureInfo.InvariantCulture);
 }

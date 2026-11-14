@@ -22,7 +22,8 @@ built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 | Checkout | Missing first name, last name or postal code blocks checkout | ✅ Done |
 | Checkout | Order item total equals the sum of item prices               | ✅ Done |
 | Checkout | Complete purchase end-to-end                                 | ⏳ Planned |
-| Sorting  | Products sorted by price (low → high) are in correct order   | ⏳ Planned |
+| Sorting  | Products sorted by name (A → Z, Z → A) are in correct order  | ✅ Done |
+| Sorting  | Products sorted by price (low → high, high → low) are in correct order | ✅ Done |
 | Logout   | Logging out returns the user to the login page               | 💡 Optional |
 
 ## Project structure
@@ -39,6 +40,8 @@ SauceDemo.Tests/
   locators and *how* to do it, so UI changes are fixed in one place.
 - **Explicit waits only** – all element access goes through `BasePage`, which waits
   for elements to be visible. No `Thread.Sleep`, no implicit waits.
+- **Stale-element safe** – waits retry when the page re-renders an element (e.g. the
+  product list after sorting), and pages never cache `IWebElement`s, only locators.
 - **Fresh browser per test** – tests are independent and can run in any order.
 - **Environment-based config** – URL and headless mode can be changed without code changes.
 
