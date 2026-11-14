@@ -9,19 +9,15 @@ public class LoginTests : BaseTest
     [Test]
     public void Login_WithValidCredentials_OpensInventoryPage()
     {
-        var loginPage = new LoginPage(Driver);
+        new LoginPage(Driver).Login(Users.Standard, Users.Password);
 
-        loginPage.Login(Users.Standard, Users.Password);
-
-        Assert.That(() => Driver.Url, Does.Contain("inventory.html").After(5000, 250));
+        Assert.That(Driver.Url, Does.Contain("inventory.html"));
     }
 
     [Test]
     public void Login_WithLockedOutUser_ShowsLockedOutError()
     {
-        var loginPage = new LoginPage(Driver);
-
-        loginPage.Login(Users.LockedOut, Users.Password);
+        var loginPage = new LoginPage(Driver).LoginExpectingError(Users.LockedOut, Users.Password);
 
         Assert.That(loginPage.GetErrorMessage(),
             Is.EqualTo("Epic sadface: Sorry, this user has been locked out."));
@@ -32,11 +28,8 @@ public class LoginTests : BaseTest
     [TestCase("", "", "Epic sadface: Username is required")]
     public void Login_WithMissingCredentials_ShowsRequiredFieldError(string username, string password, string expected)
     {
-        var loginPage = new LoginPage(Driver);
+        var loginPage = new LoginPage(Driver).LoginExpectingError(username, password);
 
-        loginPage.Login(username, password);
-
-        Assert.That(loginPage.GetErrorMessage(),
-            Is.EqualTo(expected));
+        Assert.That(loginPage.GetErrorMessage(), Is.EqualTo(expected));
     }
 }

@@ -13,14 +13,25 @@ public class CheckoutInformationPage : BasePage
 
     public CheckoutInformationPage(IWebDriver driver) : base(driver, FirstNameInput) { }
 
-    public void FillInformation(Customer customer)
+    public CheckoutInformationPage FillInformation(Customer customer)
     {
         Type(FirstNameInput, customer.FirstName);
         Type(LastNameInput, customer.LastName);
         Type(PostalCodeInput, customer.PostalCode);
+        return this;
     }
 
-    public void Continue() => Click(ContinueButton);
+    public CheckoutOverviewPage Continue()
+    {
+        Click(ContinueButton);
+        return new CheckoutOverviewPage(Driver);
+    }
+
+    public CheckoutInformationPage ContinueExpectingError()
+    {
+        Click(ContinueButton);
+        return this;
+    }
 
     public string GetErrorMessage() => GetText(ErrorMessage);
 }

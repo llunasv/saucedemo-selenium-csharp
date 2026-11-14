@@ -1,12 +1,12 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+using SauceDemo.Tests.Data;
+using SauceDemo.Tests.Pages;
 
 namespace SauceDemo.Tests.Core;
 
 public abstract class BaseTest
 {
-
-    protected  IWebDriver Driver = null!;
+    protected IWebDriver Driver = null!;
 
     [SetUp]
     public void Setup()
@@ -21,4 +21,7 @@ public abstract class BaseTest
         Driver.Quit();
         Driver.Dispose();
     }
+
+    protected InventoryPage LoginAsStandardUser() =>
+        new LoginPage(Driver).Login(Users.Standard, Users.Password);
 }

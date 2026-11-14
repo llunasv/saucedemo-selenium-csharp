@@ -11,7 +11,19 @@ public class LoginPage : BasePage
 
     public LoginPage(IWebDriver driver) : base(driver, LoginButton) { }
 
-    public void Login(string username, string password)
+    public InventoryPage Login(string username, string password)
+    {
+        SubmitCredentials(username, password);
+        return new InventoryPage(Driver);
+    }
+
+    public LoginPage LoginExpectingError(string username, string password)
+    {
+        SubmitCredentials(username, password);
+        return this;
+    }
+
+    private void SubmitCredentials(string username, string password)
     {
         Type(UsernameInput, username);
         Type(PasswordInput, password);

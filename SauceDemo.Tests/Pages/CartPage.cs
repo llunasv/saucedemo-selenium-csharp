@@ -9,5 +9,9 @@ public class CartPage : BasePage
 
     public CartPage(IWebDriver driver) : base(driver, CartList) { }
 
-    public void Checkout() => Click(CheckoutButton);
+    public CheckoutInformationPage Checkout()
+    {
+        Click(CheckoutButton);
+        return new CheckoutInformationPage(Driver);
+    }
 }

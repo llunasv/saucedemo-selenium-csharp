@@ -10,10 +10,17 @@ public class InventoryPage : BasePage
 
     public InventoryPage(IWebDriver driver) : base(driver, InventoryList) { }
 
-    public void OpenCart() => Click(CartLink);
+    public CartPage OpenCart()
+    {
+        Click(CartLink);
+        return new CartPage(Driver);
+    }
 
-    public void AddToCart(string product) =>
+    public InventoryPage AddToCart(string product)
+    {
         Click(By.CssSelector($"[data-test='add-to-cart-{product}']"));
+        return this;
+    }
 
     public string GetCartBadgeCount() => GetText(CartBadge);
 
