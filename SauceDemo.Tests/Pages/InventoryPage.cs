@@ -6,13 +6,21 @@ public class InventoryPage : BasePage
 {
     private static readonly By CartBadge = By.CssSelector("[data-test='shopping-cart-badge']");
     private static readonly By CartLink = By.CssSelector("[data-test='shopping-cart-link']");
+    private static readonly By InventoryList = By.CssSelector("[data-test='inventory-list']");
 
-    public InventoryPage(IWebDriver driver) : base(driver) { }
+    public InventoryPage(IWebDriver driver) : base(driver, InventoryList) { }
 
-    public void OpenCart() => Click(CartLink);
+    public CartPage OpenCart()
+    {
+        Click(CartLink);
+        return new CartPage(Driver);
+    }
 
-    public void AddToCart(string product) =>
+    public InventoryPage AddToCart(string product)
+    {
         Click(By.CssSelector($"[data-test='add-to-cart-{product}']"));
+        return this;
+    }
 
     public string GetCartBadgeCount() => GetText(CartBadge);
 

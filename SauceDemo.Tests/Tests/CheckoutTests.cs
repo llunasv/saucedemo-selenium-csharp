@@ -16,24 +16,19 @@ public class CheckoutTests : BaseTest
             .SetArgDisplayNames("missing postal code");
     }
 
-    private CheckoutInformationPage OpenCheckoutWithTwoProducts()
-    {
-        new LoginPage(Driver).Login(Users.Standard, Users.Password);
-        var inventoryPage = new InventoryPage(Driver);
-        inventoryPage.AddToCart(Products.Backpack);
-        inventoryPage.AddToCart(Products.BikeLight);
-        inventoryPage.OpenCart();
-        new CartPage(Driver).Checkout();
-        return new CheckoutInformationPage(Driver);
-    }
+    private CheckoutInformationPage OpenCheckoutWithTwoProducts() =>
+        LoginAsStandardUser()
+            .AddToCart(Products.Backpack)
+            .AddToCart(Products.BikeLight)
+            .OpenCart()
+            .Checkout();
 
     [TestCaseSource(nameof(MissingFieldCases))]
     public void Checkout_WithMissingField_ShowsRequiredFieldError(Customer customer, string expectedError)
     {
-        var checkoutInformationPage = OpenCheckoutWithTwoProducts();
-
-        checkoutInformationPage.FillInformation(customer);
-        checkoutInformationPage.Continue();
+        var checkoutInformationPage = OpenCheckoutWithTwoProducts()
+            .FillInformation(customer)
+            .ContinueExpectingError();
 
         Assert.That(checkoutInformationPage.GetErrorMessage(), Is.EqualTo(expectedError));
     }
@@ -41,12 +36,10 @@ public class CheckoutTests : BaseTest
     [Test]
     public void Checkout_Overview_ItemTotalEqualsSumOfItemPrices()
     {
-        var checkoutInformationPage = OpenCheckoutWithTwoProducts();
+        var checkoutOverviewPage = OpenCheckoutWithTwoProducts()
+            .FillInformation(new CustomerBuilder().Build())
+            .Continue();
 
-        checkoutInformationPage.FillInformation(new CustomerBuilder().Build());
-        checkoutInformationPage.Continue();
-
-        var checkoutOverviewPage = new CheckoutOverviewPage(Driver);
         Assert.That(checkoutOverviewPage.GetItemTotal(), Is.EqualTo(checkoutOverviewPage.GetItemPrices().Sum()));
     }
 }

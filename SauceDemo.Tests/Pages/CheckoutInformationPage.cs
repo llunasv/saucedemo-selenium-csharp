@@ -11,16 +11,27 @@ public class CheckoutInformationPage : BasePage
     private static readonly By ContinueButton = By.CssSelector("[data-test='continue']");
     private static readonly By ErrorMessage = By.CssSelector("[data-test='error']");
 
-    public CheckoutInformationPage(IWebDriver driver) : base(driver) { }
+    public CheckoutInformationPage(IWebDriver driver) : base(driver, FirstNameInput) { }
 
-    public void FillInformation(Customer customer)
+    public CheckoutInformationPage FillInformation(Customer customer)
     {
         Type(FirstNameInput, customer.FirstName);
         Type(LastNameInput, customer.LastName);
         Type(PostalCodeInput, customer.PostalCode);
+        return this;
     }
 
-    public void Continue() => Click(ContinueButton);
+    public CheckoutOverviewPage Continue()
+    {
+        Click(ContinueButton);
+        return new CheckoutOverviewPage(Driver);
+    }
+
+    public CheckoutInformationPage ContinueExpectingError()
+    {
+        Click(ContinueButton);
+        return this;
+    }
 
     public string GetErrorMessage() => GetText(ErrorMessage);
 }
