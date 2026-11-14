@@ -15,7 +15,7 @@ built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 | Login    | Valid credentials log the user in          | ✅ Done |
 | Login    | Locked-out user sees an error              | ✅ Done |
 | Login    | Empty fields show validation errors        | ✅ Done |
-| Cart     | Adding items updates the cart badge count  | ⏳ Planned |
+| Cart     | Adding items updates the cart badge count  | ✅ Done |
 | Checkout | Missing postal code blocks checkout        | ⏳ Planned |
 
 ## Project structure
