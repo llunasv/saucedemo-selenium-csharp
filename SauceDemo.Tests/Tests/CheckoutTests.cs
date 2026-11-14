@@ -42,4 +42,27 @@ public class CheckoutTests : BaseTest
 
         Assert.That(checkoutOverviewPage.GetItemTotal(), Is.EqualTo(checkoutOverviewPage.GetItemPrices().Sum()));
     }
+
+    [Test]
+    public void Checkout_WithValidInformation_ShowsOrderConfirmation()
+    {
+        var checkoutCompletePage = OpenCheckoutWithTwoProducts()
+            .FillInformation(new CustomerBuilder().Build())
+            .Continue()
+            .Finish();
+
+        Assert.That(checkoutCompletePage.GetHeader(), Is.EqualTo("Thank you for your order!"));
+    }
+
+    [Test]
+    public void Checkout_AfterOrderCompleted_CartIsEmpty()
+    {
+        var inventoryPage = OpenCheckoutWithTwoProducts()
+            .FillInformation(new CustomerBuilder().Build())
+            .Continue()
+            .Finish()
+            .BackHome();
+
+        Assert.That(inventoryPage.IsCartBadgeVisible(), Is.False);
+    }
 }
