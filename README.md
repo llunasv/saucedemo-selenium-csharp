@@ -1,5 +1,7 @@
 ﻿# SauceDemo – Selenium UI Tests (C#)
 
+[![UI Tests](https://github.com/llunasv/saucedemo-selenium-csharp/actions/workflows/tests.yml/badge.svg?branch=dev)](https://github.com/llunasv/saucedemo-selenium-csharp/actions/workflows/tests.yml)
+
 Automated UI tests for [saucedemo.com](https://www.saucedemo.com), a demo e-commerce site,
 built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 
@@ -8,6 +10,7 @@ built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 - Selenium WebDriver 4
 - NUnit 4
 - Chrome (driver managed automatically by Selenium Manager)
+- GitHub Actions (CI)
 
 ## Test coverage
 | Area     | Scenario                                                     | Status |
@@ -77,8 +80,13 @@ Run a single test class:
 dotnet test --filter "FullyQualifiedName~LoginTests"
 ```
 
+## Continuous integration
+Every pull request and every push to `dev` / `main` runs the full test suite on
+GitHub Actions (Ubuntu, Chrome in headless mode). Test results are uploaded as a
+`.trx` artifact on each run, including failed ones. The workflow can also be started
+manually from the **Actions** tab.
+
 ## Roadmap
-- [ ] CI – run tests headless on every pull request with GitHub Actions
 - [ ] Fluent Page Objects – actions return the next page (`Login()` → `InventoryPage`)
 - [ ] Page load verification – each page confirms it loaded before use
 - [ ] Cross-browser – choose Chrome / Firefox / Edge with a `BROWSER` variable
