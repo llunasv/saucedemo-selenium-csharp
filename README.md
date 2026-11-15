@@ -19,6 +19,8 @@ built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 | Login    | Locked-out user sees an error                                | ✅ Done |
 | Login    | Empty fields show validation errors                          | ✅ Done |
 | Cart     | Adding items updates the cart badge count                    | ✅ Done |
+| Cart     | Added items appear on the cart page                          | ✅ Done |
+| Cart     | Removing an item (from the product list or the cart) updates the cart | ✅ Done |
 | Checkout | Missing first name, last name or postal code blocks checkout | ✅ Done |
 | Checkout | Order item total equals the sum of item prices               | ✅ Done |
 | Checkout | Complete purchase end-to-end shows the order confirmation    | ✅ Done |
@@ -43,6 +45,8 @@ SauceDemo.Tests/
   for elements to be visible. No `Thread.Sleep`, no implicit waits.
 - **Stale-element safe** – waits retry when the page re-renders an element (e.g. the
   product list after sorting), and pages never cache `IWebElement`s, only locators.
+- **Actions wait for their result** – `RemoveFromCart()` waits until the Remove button
+  is gone before returning, so the next check never races the page's re-render.
 - **Fresh browser per test** – tests are independent and can run in any order.
 - **Environment-based config** – URL and headless mode can be changed without code changes.
 
