@@ -59,6 +59,19 @@ public abstract class BasePage
 
     protected bool IsPresent(By locator) => Driver.FindElements(locator).Count > 0;
 
+    protected void WaitUntilGone(By locator)
+    {
+        try
+        {
+            Wait.Until(d => d.FindElements(locator).Count == 0);
+        }
+        catch (WebDriverTimeoutException e)
+        {
+            throw new WebDriverTimeoutException(
+                $"{locator} was still present after {TestSettings.DefaultTimeout.TotalSeconds} seconds", e);
+        }
+    }
+
     // "$29.99" -> 29.99; InvariantCulture so "." is the decimal separator on any PC locale
     protected static decimal ParsePrice(string text) =>
         decimal.Parse(text.TrimStart('$'), CultureInfo.InvariantCulture);

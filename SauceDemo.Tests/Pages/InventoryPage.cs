@@ -1,5 +1,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using SauceDemo.Tests.Data;
 
 namespace SauceDemo.Tests.Pages;
 
@@ -20,9 +21,17 @@ public class InventoryPage : BasePage
         return new CartPage(Driver);
     }
 
-    public InventoryPage AddToCart(string product)
+    public InventoryPage AddToCart(Product product)
     {
-        Click(By.CssSelector($"[data-test='add-to-cart-{product}']"));
+        Click(By.CssSelector($"[data-test='add-to-cart-{product.Id}']"));
+        return this;
+    }
+
+    public InventoryPage RemoveFromCart(Product product)
+    {
+        var removeButton = By.CssSelector($"[data-test='remove-{product.Id}']");
+        Click(removeButton);
+        WaitUntilGone(removeButton);
         return this;
     }
 

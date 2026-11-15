@@ -1,8 +1,9 @@
 namespace SauceDemo.Tests.Data;
 
+public record Product(string Id, string Name);
+
 public static class Products
 {
-    public const string Backpack = "sauce-labs-backpack";
-    public const string BikeLight = "sauce-labs-bike-light";
-
+    public static readonly Product Backpack = new("sauce-labs-backpack", "Sauce Labs Backpack");
+    public static readonly Product BikeLight = new("sauce-labs-bike-light", "Sauce Labs Bike Light");
 }
