@@ -11,7 +11,7 @@ public static class DriverFactory
     public static IWebDriver Create() => TestSettings.Browser switch
     {
         "chrome" => new ChromeDriver(ConfigureChromium(new ChromeOptions())),
-        "edge" => new EdgeDriver(ConfigureChromium(new EdgeOptions())),
+        "edge" => new EdgeDriver(ConfigureChromium(CreateEdgeOptions())),
         "firefox" => new FirefoxDriver(CreateFirefoxOptions()),
         _ => throw new ArgumentException(
             $"Unsupported BROWSER '{TestSettings.Browser}'. Use chrome, firefox or edge.")
@@ -27,6 +27,15 @@ public static class DriverFactory
         options.AddUserProfilePreference("credentials_enable_service", false);
         options.AddUserProfilePreference("profile.password_manager_enabled", false);
         options.AddUserProfilePreference("profile.password_manager_leak_detection", false);
+        return options;
+    }
+
+    private static EdgeOptions CreateEdgeOptions()
+    {
+        var options = new EdgeOptions();
+        // On the Linux CI runner Edge exits right after launch ("Chrome instance exited")
+        // while Chrome starts fine: Edge can't set up its sandbox there
+        if (OperatingSystem.IsLinux()) options.AddArgument("--no-sandbox");
         return options;
     }
 
