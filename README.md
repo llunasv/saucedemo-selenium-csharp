@@ -1,6 +1,6 @@
 ﻿# SauceDemo – Selenium UI Tests (C#)
 
-[![UI Tests](https://github.com/llunasv/saucedemo-selenium-csharp/actions/workflows/tests.yml/badge.svg?branch=dev)](https://github.com/llunasv/saucedemo-selenium-csharp/actions/workflows/tests.yml)
+[![UI Tests](https://github.com/llunasv/saucedemo-selenium-csharp/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/llunasv/saucedemo-selenium-csharp/actions/workflows/tests.yml)
 
 Automated UI tests for [saucedemo.com](https://www.saucedemo.com), a demo e-commerce site,
 built with Selenium WebDriver, C# and NUnit using the Page Object Model.
