@@ -16,8 +16,8 @@ public class CheckoutTests : BaseTest
             .SetArgDisplayNames("missing postal code");
     }
 
-    private CheckoutInformationPage OpenCheckoutWithTwoProducts() =>
-        LoginAsStandardUser()
+    private CheckoutInformationPage OpenCheckoutWithTwoProducts(string user = Users.Standard) =>
+        LoginAs(user)
             .AddToCart(Products.Backpack)
             .AddToCart(Products.BikeLight)
             .OpenCart()
@@ -43,10 +43,12 @@ public class CheckoutTests : BaseTest
         Assert.That(checkoutOverviewPage.GetItemTotal(), Is.EqualTo(checkoutOverviewPage.GetItemPrices().Sum()));
     }
 
-    [Test]
-    public void Checkout_WithValidInformation_ShowsOrderConfirmation()
+    [TestCase(Users.Standard)]
+    [TestCase(Users.Problem, Ignore = "BUG-004: typing a Last Name overwrites the First Name")]
+    [TestCase(Users.Error, Ignore = "BUG-002: Finish button does nothing")]
+    public void Checkout_WithValidInformation_ShowsOrderConfirmation(string user)
     {
-        var checkoutCompletePage = OpenCheckoutWithTwoProducts()
+        var checkoutCompletePage = OpenCheckoutWithTwoProducts(user)
             .FillInformation(new CustomerBuilder().Build())
             .Continue()
             .Finish();

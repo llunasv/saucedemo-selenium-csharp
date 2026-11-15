@@ -59,6 +59,10 @@ SauceDemo.Tests/
 - **Animations are waited out** – the side menu's Logout link counts as visible to
   Selenium ~50 ms into its 0.5 s slide-in while still mostly off-screen, so `Logout()`
   waits for the slide to finish before clicking.
+- **Known bugs live in the tests** – the end-to-end checkout test also runs for
+  `problem_user` and `error_user`, skipped with the bug ID as the reason
+  (`Ignore = "BUG-004: ..."`). The suite stays green, the report lists the open bugs,
+  and deleting the `Ignore` re-checks a bug once it's fixed.
 - **Fresh browser per test** – tests are independent and can run in any order.
 - **Environment-based config** – URL and headless mode can be changed without code changes.
 
@@ -117,3 +121,6 @@ manually from the **Actions** tab.
 
 ## Roadmap
 - [ ] Cross-browser – choose Chrome / Firefox / Edge with a `BROWSER` variable
+- [ ] Test case design – `docs/test-cases.md` with test cases named by technique
+  (equivalence partitioning, boundary values, decision table, state transitions)
+  and linked to the automated tests that cover them

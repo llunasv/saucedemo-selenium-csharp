@@ -67,6 +67,7 @@ cosmetic or low impact.
 | Severity / Priority | Critical / High |
 | Reproducibility | Always |
 | Found by | `CheckoutTests` – fails with `CheckoutCompletePage did not load` ([PR #12](https://github.com/llunasv/saucedemo-selenium-csharp/pull/12)) |
+| Tracked by | `CheckoutTests.Checkout_WithValidInformation_ShowsOrderConfirmation("error_user")` – skipped with `Ignore = "BUG-002: ..."` |
 
 **Preconditions:** logged in as `error_user`, *Sauce Labs Backpack* in the cart.
 
@@ -122,6 +123,7 @@ cosmetic or low impact.
 | Severity / Priority | Critical / High |
 | Reproducibility | Always |
 | Found by | Exploratory testing |
+| Tracked by | `CheckoutTests.Checkout_WithValidInformation_ShowsOrderConfirmation("problem_user")` – skipped with `Ignore = "BUG-004: ..."` |
 
 **Preconditions:** logged in as `problem_user`, *Sauce Labs Backpack* in the cart, on **Checkout: Your Information**.
 
