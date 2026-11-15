@@ -22,6 +22,8 @@ public abstract class BaseTest
         Driver.Dispose();
     }
 
-    protected InventoryPage LoginAsStandardUser() =>
-        new LoginPage(Driver).Login(Users.Standard, Users.Password);
+    protected InventoryPage LoginAsStandardUser() => LoginAs(Users.Standard);
+
+    protected InventoryPage LoginAs(string user) =>
+        new LoginPage(Driver).Login(user, Users.Password);
 }
