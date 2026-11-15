@@ -9,7 +9,7 @@ built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 - C# / .NET 9
 - Selenium WebDriver 4
 - NUnit 4
-- Chrome (driver managed automatically by Selenium Manager)
+- Chrome, Firefox and Edge (drivers managed automatically by Selenium Manager)
 - GitHub Actions (CI)
 
 ## Test coverage
@@ -80,7 +80,8 @@ SauceDemo.Tests/
 - **Page load verification** – every page waits for an element unique to it when created
   and fails with a clear message (`InventoryPage did not load...`) instead of a vague
   timeout several steps later.
-- **Factory** – `DriverFactory` creates and configures the browser in one place.
+- **Factory** – `DriverFactory` creates Chrome, Firefox or Edge from the `BROWSER`
+  variable in one place; Chrome and Edge share the same Chromium setup.
 - **Base classes** – `BaseTest` owns the browser lifecycle, `BasePage` owns waiting
   and element interaction, so every test and page gets them for free.
 - **Builder** – `CustomerBuilder` creates a valid customer by default; each test
@@ -92,7 +93,7 @@ SauceDemo.Tests/
 
 ### Prerequisites
 - [.NET 9 SDK](https://dotnet.microsoft.com/download)
-- Google Chrome
+- Google Chrome (or Firefox / Microsoft Edge, see `BROWSER` below)
 
 ### Run the tests
 ```bash
@@ -102,13 +103,15 @@ dotnet test
 ```
 
 ### Configuration
-| Variable   | Default                      | Description              |
-|------------|------------------------------|--------------------------|
-| `HEADLESS` | `false`                      | Run Chrome without a UI  |
-| `BASE_URL` | `https://www.saucedemo.com/` | Site under test          |
+| Variable   | Default                      | Description                     |
+|------------|------------------------------|---------------------------------|
+| `BROWSER`  | `chrome`                     | `chrome`, `firefox` or `edge`   |
+| `HEADLESS` | `false`                      | Run the browser without a UI    |
+| `BASE_URL` | `https://www.saucedemo.com/` | Site under test                 |
 
 ```powershell
 $env:HEADLESS="true"; dotnet test
+$env:BROWSER="firefox"; dotnet test
 ```
 
 Run a single test class:
@@ -118,12 +121,11 @@ dotnet test --filter "FullyQualifiedName~LoginTests"
 
 ## Continuous integration
 Every pull request and every push to `dev` / `main` runs the full test suite on
-GitHub Actions (Ubuntu, Chrome in headless mode). Test results are uploaded as a
-`.trx` artifact on each run, including failed ones. The workflow can also be started
-manually from the **Actions** tab.
+GitHub Actions in **Chrome, Firefox and Edge** (Ubuntu, headless, one parallel job per
+browser). Test results are uploaded as a `.trx` artifact per browser on each run,
+including failed ones. The workflow can also be started manually from the **Actions** tab.
 
 ## Roadmap
-- [ ] Cross-browser – choose Chrome / Firefox / Edge with a `BROWSER` variable
 - [ ] Test case design – `docs/test-cases.md` with test cases named by technique
   (equivalence partitioning, boundary values, decision table, state transitions)
   and linked to the automated tests that cover them
