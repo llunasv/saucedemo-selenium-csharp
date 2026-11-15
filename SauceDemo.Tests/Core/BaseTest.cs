@@ -18,8 +18,8 @@ public abstract class BaseTest
     [TearDown]
     public void TearDown()
     {
-        Driver.Quit();
-        Driver.Dispose();
+        Driver?.Quit();
+        Driver?.Dispose();
     }
 
     protected InventoryPage LoginAsStandardUser() => LoginAs(Users.Standard);
