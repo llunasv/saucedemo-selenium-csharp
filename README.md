@@ -30,8 +30,16 @@ built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 | Logout   | Logging out returns the user to the login page               | ✅ Done |
 | Logout   | After logout, the product page can't be opened by URL        | ✅ Done |
 
+## Bug reports
+SauceDemo's intentionally broken accounts (`problem_user`, `error_user`) were tested
+against `standard_user` as the reference. **8 bugs** are documented with steps to
+reproduce, expected vs actual results, severity / priority and screenshots in
+[docs/bug-reports.md](docs/bug-reports.md). Three of them were first caught by this
+test suite; the rest were found by exploratory testing.
+
 ## Project structure
 ```
+docs/        # bug reports and their screenshots
 SauceDemo.Tests/
 ├── Core/    # test lifecycle, driver creation, configuration
 ├── Pages/   # Page Objects – one class per screen
