@@ -63,7 +63,10 @@ SauceDemo.Tests/
   `problem_user` and `error_user`, skipped with the bug ID as the reason
   (`Ignore = "BUG-004: ..."`). The suite stays green, the report lists the open bugs,
   and deleting the `Ignore` re-checks a bug once it's fixed.
-- **Fresh browser per test** – tests are independent and can run in any order.
+- **Fresh browser per test, run in parallel** – tests are independent, so 4 run at a
+  time (~20 s for the suite instead of ~50 s). Each test also gets its own instance
+  of the test class (NUnit `InstancePerTestCase`): with NUnit's default shared
+  instance, parallel tests would overwrite and quit each other's browser.
 - **Environment-based config** – URL and headless mode can be changed without code changes.
 
 ## Design patterns
