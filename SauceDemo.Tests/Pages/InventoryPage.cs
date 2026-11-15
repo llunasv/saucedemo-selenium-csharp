@@ -12,6 +12,9 @@ public class InventoryPage : BasePage
     private static readonly By ItemNames = By.CssSelector("[data-test='inventory-item-name']");
     private static readonly By ItemPrices = By.CssSelector("[data-test='inventory-item-price']");
     private static readonly By SortDropdown = By.CssSelector("[data-test='product-sort-container']");
+    private static readonly By MenuButton = By.Id("react-burger-menu-btn");
+    private static readonly By Menu = By.CssSelector(".bm-menu-wrap");
+    private static readonly By LogoutLink = By.CssSelector("[data-test='logout-sidebar-link']");
 
     public InventoryPage(IWebDriver driver) : base(driver, InventoryList) { }
 
@@ -39,6 +42,15 @@ public class InventoryPage : BasePage
     {
         new SelectElement(Find(SortDropdown)).SelectByValue(option);
         return this;
+    }
+
+    public LoginPage Logout()
+    {
+        Click(MenuButton);
+        // the link counts as displayed ~50 ms into the 0.5 s slide-in, while still mostly off-screen
+        Wait.Until(d => d.FindElement(Menu).GetCssValue("transform") == "none");
+        Click(LogoutLink);
+        return new LoginPage(Driver);
     }
 
     public IReadOnlyList<string> GetNames() => GetTexts(ItemNames);

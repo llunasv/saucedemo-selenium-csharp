@@ -27,7 +27,8 @@ built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 | Checkout | Cart is empty after a completed order                        | ✅ Done |
 | Sorting  | Products sorted by name (A → Z, Z → A) are in correct order  | ✅ Done |
 | Sorting  | Products sorted by price (low → high, high → low) are in correct order | ✅ Done |
-| Logout   | Logging out returns the user to the login page               | 💡 Optional |
+| Logout   | Logging out returns the user to the login page               | ✅ Done |
+| Logout   | After logout, the product page can't be opened by URL        | ✅ Done |
 
 ## Project structure
 ```
@@ -47,6 +48,9 @@ SauceDemo.Tests/
   product list after sorting), and pages never cache `IWebElement`s, only locators.
 - **Actions wait for their result** – `RemoveFromCart()` waits until the Remove button
   is gone before returning, so the next check never races the page's re-render.
+- **Animations are waited out** – the side menu's Logout link counts as visible to
+  Selenium ~50 ms into its 0.5 s slide-in while still mostly off-screen, so `Logout()`
+  waits for the slide to finish before clicking.
 - **Fresh browser per test** – tests are independent and can run in any order.
 - **Environment-based config** – URL and headless mode can be changed without code changes.
 
