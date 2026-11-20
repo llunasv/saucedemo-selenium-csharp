@@ -1,8 +1,8 @@
 # Test cases – SauceDemo
 
 24 test cases for the main flows of https://www.saucedemo.com, each designed with a named
-test design technique. 20 of them are covered by an automated test in this repository; 4 are
-`Manual` (see [Why some cases stay manual](#why-some-cases-stay-manual)).
+test design technique. 23 of them are covered by an automated test in this repository; 1 is
+`Manual` (see [Why a case stays manual](#why-a-case-stays-manual)).
 
 ## Techniques used
 | Technique | Idea | Used for |
@@ -48,8 +48,8 @@ what the site does with them:
 |---|---|---|---|---|---|
 | TC-LOG-01 | Login with a valid user | EP – valid user | 1. Enter `standard_user` and `secret_sauce`<br>2. Click Login | The Products page opens (`/inventory.html`) | `LoginTests.Login_WithValidCredentials_OpensInventoryPage` |
 | TC-LOG-02 | Login with a locked-out user | EP – locked-out user | 1. Enter `locked_out_user` and `secret_sauce`<br>2. Click Login | Error "Epic sadface: Sorry, this user has been locked out."; stays on the login page | `LoginTests.Login_WithLockedOutUser_ShowsLockedOutError` |
-| TC-LOG-03 | Login with a wrong password | EP – wrong password | 1. Enter `standard_user` and `wrong`<br>2. Click Login | Error "Epic sadface: Username and password do not match any user in this service"; stays on the login page | Manual |
-| TC-LOG-04 | Login with a user that does not exist | EP – unknown user | 1. Enter `no_such_user` and `secret_sauce`<br>2. Click Login | Error "Epic sadface: Username and password do not match any user in this service"; stays on the login page | Manual |
+| TC-LOG-03 | Login with a wrong password | EP – wrong password | 1. Enter `standard_user` and `wrong_password`<br>2. Click Login | Error "Epic sadface: Username and password do not match any user in this service"; stays on the login page | `LoginTests.Login_WithInvalidCredentials_ShowsMismatchError("standard_user", "wrong_password")` |
+| TC-LOG-04 | Login with a user that does not exist | EP – unknown user | 1. Enter `no_such_user` and `secret_sauce`<br>2. Click Login | Error "Epic sadface: Username and password do not match any user in this service"; stays on the login page | `LoginTests.Login_WithInvalidCredentials_ShowsMismatchError("no_such_user", "secret_sauce")` |
 
 ### Decision table: empty / filled fields
 | Condition / action | R1 | R2 | R3 | R4 |
@@ -94,7 +94,7 @@ cart", no badge contribution) or **in cart** (button "Remove", counted in the ba
 
 | ID | Title | Technique | Steps | Expected | Automated by |
 |---|---|---|---|---|---|
-| TC-CRT-05 | Add, remove and add the same product again | State transition | 1. Log in<br>2. Add Sauce Labs Backpack<br>3. Click Remove<br>4. Click Add to cart again | After step 2: button "Remove", badge `1`. After step 3: button "Add to cart", no badge. After step 4: button "Remove", badge `1` | Manual |
+| TC-CRT-05 | Add, remove and add the same product again | State transition | 1. Log in<br>2. Add Sauce Labs Backpack<br>3. Click Remove<br>4. Click Add to cart again | After step 2: button "Remove", badge `1`. After step 3: button "Add to cart", no badge. After step 4: button "Remove", badge `1` | `CartTests.AddToCart_AfterRemovingSameItem_ShowsBadgeCountOne` (checks the badge after each Remove / Add; the button labels are checked by hand) |
 
 ---
 
@@ -173,18 +173,14 @@ a protected page still be opened by typing its URL?
 
 ---
 
-## Why some cases stay manual
-Four cases have no automated test:
+## Why a case stays manual
+Only **TC-CRT-03** (badge with all 6 products) has no automated test. The 6-product maximum is a
+fixed catalogue, so a regression there is unlikely, and the case needs six clicks for one
+assertion. It was run by hand on 2026-11-20 and is the first one to automate if the catalogue
+ever grows or becomes configurable.
 
-- **TC-LOG-03 and TC-LOG-04** – wrong password and unknown user go through the same code path
-  and show the same message, so one of them would be enough to automate. Good next candidate.
-- **TC-CRT-03** – the 6-product maximum is a fixed catalogue; a regression there is unlikely and
-  the case needs six clicks for one assertion.
-- **TC-CRT-05** – the transition Add → Remove is already automated by TC-CRT-04; only the second
-  Add is new. Cheap to automate, so also a good next candidate.
-
-The paths that matter most to a shop (login, sorting, the purchase) are automated first. Rules
-R5–R8 of the checkout table are not cases at all, see the note under the table.
+TC-LOG-03, TC-LOG-04 and TC-CRT-05 were manual in the first version of this document and are now
+automated. Rules R5–R8 of the checkout table are not cases at all, see the note under the table.
 
 ## Automated tests without a case of their own
 These tests exist but are not mapped to a case, because they repeat a boundary or state that is
