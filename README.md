@@ -30,6 +30,12 @@ built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 | Logout   | Logging out returns the user to the login page               | ✅ Done |
 | Logout   | After logout, the product page can't be opened by URL        | ✅ Done |
 
+## Test cases
+**24 test cases** designed with equivalence partitioning, boundary value analysis,
+decision tables and state transitions are in [docs/test-cases.md](docs/test-cases.md).
+Each case names the technique it comes from and the automated test that covers it
+(20 are automated, 4 are marked `Manual`).
+
 ## Bug reports
 SauceDemo's intentionally broken accounts (`problem_user`, `error_user`) were tested
 against `standard_user` as the reference. **8 bugs** are documented with steps to
@@ -39,7 +45,7 @@ test suite; the rest were found by exploratory testing.
 
 ## Project structure
 ```
-docs/        # bug reports and their screenshots
+docs/        # test cases, bug reports and their screenshots
 SauceDemo.Tests/
 ├── Core/    # test lifecycle, driver creation, configuration
 ├── Pages/   # Page Objects – one class per screen
@@ -126,6 +132,6 @@ browser). Test results are uploaded as a `.trx` artifact per browser on each run
 including failed ones. The workflow can also be started manually from the **Actions** tab.
 
 ## Roadmap
-- [ ] Test case design – `docs/test-cases.md` with test cases named by technique
+- [x] Test case design – `docs/test-cases.md` with test cases named by technique
   (equivalence partitioning, boundary values, decision table, state transitions)
   and linked to the automated tests that cover them
