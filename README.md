@@ -5,6 +5,20 @@
 Automated UI tests for [saucedemo.com](https://www.saucedemo.com), a demo e-commerce site,
 built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 
+## Highlights
+- **29 automated tests** (2 skipped on purpose for known site bugs) covering login, cart,
+  sorting, checkout and logout; the suite runs in about 20 seconds because tests run in
+  parallel, each in its own browser.
+- **Chrome, Firefox and Edge** on every pull request through a GitHub Actions matrix.
+- **[24 test cases](docs/test-cases.md)** designed with equivalence partitioning, boundary
+  values, decision tables and state transitions; each one is linked to the automated test
+  that covers it (or marked Manual).
+- **[8 bug reports](docs/bug-reports.md)** found in SauceDemo's intentionally broken accounts,
+  with steps, severity and screenshots. The known bugs are skipped in the suite by ID, so the
+  build stays green and the report stays honest.
+- **Maintainable test code:** Page Object Model with fluent pages, explicit waits only (no
+  `Thread.Sleep`), and test data built with the Builder pattern.
+
 ## Tech stack
 - C# / .NET 9
 - Selenium WebDriver 4
