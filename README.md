@@ -17,10 +17,12 @@ built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 |----------|--------------------------------------------------------------|--------|
 | Login    | Valid credentials log the user in                            | ✅ Done |
 | Login    | Locked-out user sees an error                                | ✅ Done |
+| Login    | Wrong password or unknown user shows an error                | ✅ Done |
 | Login    | Empty fields show validation errors                          | ✅ Done |
 | Cart     | Adding items updates the cart badge count                    | ✅ Done |
 | Cart     | Added items appear on the cart page                          | ✅ Done |
 | Cart     | Removing an item (from the product list or the cart) updates the cart | ✅ Done |
+| Cart     | An item can be added again after it was removed              | ✅ Done |
 | Checkout | Missing first name, last name or postal code blocks checkout | ✅ Done |
 | Checkout | Order item total equals the sum of item prices               | ✅ Done |
 | Checkout | Complete purchase end-to-end shows the order confirmation    | ✅ Done |
@@ -34,7 +36,7 @@ built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 **24 test cases** designed with equivalence partitioning, boundary value analysis,
 decision tables and state transitions are in [docs/test-cases.md](docs/test-cases.md).
 Each case names the technique it comes from and the automated test that covers it
-(20 are automated, 4 are marked `Manual`).
+(23 are automated, 1 is marked `Manual`).
 
 ## Bug reports
 SauceDemo's intentionally broken accounts (`problem_user`, `error_user`) were tested
