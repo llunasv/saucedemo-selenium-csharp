@@ -5,6 +5,20 @@
 Automated UI tests for [saucedemo.com](https://www.saucedemo.com), a demo e-commerce site,
 built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 
+## Highlights
+- **29 automated tests** (2 skipped on purpose for known site bugs) covering login, cart,
+  sorting, checkout and logout; the suite runs in about 20 seconds because tests run in
+  parallel, each in its own browser.
+- **Chrome, Firefox and Edge** on every pull request through a GitHub Actions matrix.
+- **[24 test cases](docs/test-cases.md)** designed with equivalence partitioning, boundary
+  values, decision tables and state transitions; each one is linked to the automated test
+  that covers it (or marked Manual).
+- **[8 bug reports](docs/bug-reports.md)** found in SauceDemo's intentionally broken accounts,
+  with steps, severity and screenshots. The known bugs are skipped in the suite by ID, so the
+  build stays green and the report stays honest.
+- **Maintainable test code:** Page Object Model with fluent pages, explicit waits only (no
+  `Thread.Sleep`), and test data built with the Builder pattern.
+
 ## Tech stack
 - C# / .NET 9
 - Selenium WebDriver 4
@@ -17,10 +31,12 @@ built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 |----------|--------------------------------------------------------------|--------|
 | Login    | Valid credentials log the user in                            | ✅ Done |
 | Login    | Locked-out user sees an error                                | ✅ Done |
+| Login    | Wrong password or unknown user shows an error                | ✅ Done |
 | Login    | Empty fields show validation errors                          | ✅ Done |
 | Cart     | Adding items updates the cart badge count                    | ✅ Done |
 | Cart     | Added items appear on the cart page                          | ✅ Done |
 | Cart     | Removing an item (from the product list or the cart) updates the cart | ✅ Done |
+| Cart     | An item can be added again after it was removed              | ✅ Done |
 | Checkout | Missing first name, last name or postal code blocks checkout | ✅ Done |
 | Checkout | Order item total equals the sum of item prices               | ✅ Done |
 | Checkout | Complete purchase end-to-end shows the order confirmation    | ✅ Done |
@@ -29,6 +45,12 @@ built with Selenium WebDriver, C# and NUnit using the Page Object Model.
 | Sorting  | Products sorted by price (low → high, high → low) are in correct order | ✅ Done |
 | Logout   | Logging out returns the user to the login page               | ✅ Done |
 | Logout   | After logout, the product page can't be opened by URL        | ✅ Done |
+
+## Test cases
+**24 test cases** designed with equivalence partitioning, boundary value analysis,
+decision tables and state transitions are in [docs/test-cases.md](docs/test-cases.md).
+Each case names the technique it comes from and the automated test that covers it
+(23 are automated, 1 is marked `Manual`).
 
 ## Bug reports
 SauceDemo's intentionally broken accounts (`problem_user`, `error_user`) were tested
@@ -39,7 +61,7 @@ test suite; the rest were found by exploratory testing.
 
 ## Project structure
 ```
-docs/        # bug reports and their screenshots
+docs/        # test cases, bug reports and their screenshots
 SauceDemo.Tests/
 ├── Core/    # test lifecycle, driver creation, configuration
 ├── Pages/   # Page Objects – one class per screen
@@ -126,6 +148,6 @@ browser). Test results are uploaded as a `.trx` artifact per browser on each run
 including failed ones. The workflow can also be started manually from the **Actions** tab.
 
 ## Roadmap
-- [ ] Test case design – `docs/test-cases.md` with test cases named by technique
+- [x] Test case design – `docs/test-cases.md` with test cases named by technique
   (equivalence partitioning, boundary values, decision table, state transitions)
   and linked to the automated tests that cover them

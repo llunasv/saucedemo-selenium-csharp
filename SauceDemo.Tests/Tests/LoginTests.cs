@@ -23,6 +23,16 @@ public class LoginTests : BaseTest
             Is.EqualTo("Epic sadface: Sorry, this user has been locked out."));
     }
 
+    [TestCase(Users.Standard, "wrong_password")]
+    [TestCase("no_such_user", Users.Password)]
+    public void Login_WithInvalidCredentials_ShowsMismatchError(string username, string password)
+    {
+        var loginPage = new LoginPage(Driver).LoginExpectingError(username, password);
+
+        Assert.That(loginPage.GetErrorMessage(),
+            Is.EqualTo("Epic sadface: Username and password do not match any user in this service"));
+    }
+
     [TestCase(Users.Standard, "", "Epic sadface: Password is required")]
     [TestCase("", Users.Password, "Epic sadface: Username is required")]
     [TestCase("", "", "Epic sadface: Username is required")]
