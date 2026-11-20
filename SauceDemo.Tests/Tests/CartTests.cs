@@ -54,6 +54,17 @@ public class CartTests : BaseTest
     }
 
     [Test]
+    public void AddToCart_AfterRemovingSameItem_ShowsBadgeCountOne()
+    {
+        var inventoryPage = LoginAsStandardUser()
+            .AddToCart(Products.Backpack)
+            .RemoveFromCart(Products.Backpack)
+            .AddToCart(Products.Backpack);
+
+        Assert.That(inventoryPage.GetCartBadgeCount(), Is.EqualTo("1"));
+    }
+
+    [Test]
     public void RemoveFromCart_OnCartPage_KeepsOtherItems()
     {
         var cartPage = LoginAsStandardUser()
